@@ -1,20 +1,17 @@
 import "reflect-metadata";
 import { createConnection } from "typeorm";
-import express from "express";
 import bodyParser from "body-parser";
-import helmet from "helmet";
-import cors from "cors";
+import { createExpressServer } from 'routing-controllers';
+import { BlogController } from "./controllers/BlogController";
 
 createConnection()
   .then(async connection => {
-    // Create a new express application instance
-    const app = express();
-    // Call midlewares
-    app.use(cors());
-    app.use(helmet());
+    const app = createExpressServer({
+      routePrefix: '/api',
+      cors: true,
+      controllers: [BlogController], // we specify controllers we want to use
+    });
     app.use(bodyParser.json());
-    //Set all routes from routes folder
-
     app.listen(3000, () => {
       console.log("Server started on port 3000!");
       console.log(connection)
