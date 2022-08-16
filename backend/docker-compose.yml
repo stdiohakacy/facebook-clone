@@ -41,6 +41,19 @@ services:
     networks:
       - fb-network
     command: npm run dev
+  fb-pgadmin:
+    container_name: fb-pgadmin
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "5005:80"
+    volumes:
+      - fb-pgadmin-data:/var/lib/pgadmin
+    networks:
+      - fb-network
   # fb-redis:
   #   image: redis:alpine
   #   container_name: fb-redis
@@ -51,6 +64,7 @@ services:
 
 volumes:
   fb-db:
+  fb-pgadmin-data:
   # fb-redis-data:
 networks:
   fb-network:
