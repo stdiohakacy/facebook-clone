@@ -1,0 +1,49 @@
+version: '3.7'
+
+services:
+  fb-postgres:
+    image: postgres:14.1-alpine
+    container_name: fb-postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+    volumes: 
+      - fb-db:/var/lib/postgresql/data
+    networks:
+      - fb-network
+  fb-be:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: base
+    volumes:
+      - ./src:/home/node/app/src
+      - ./nodemon.json:/home/node/app/nodemon.json
+    container_name: fb-be
+    
+    expose:
+      - '3000'
+    ports:
+      - '3000:3000'
+    environment:
+      DB_HOST: fb-postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: postgres
+    links:
+      - fb-postgres
+    depends_on:
+      - fb-postgres
+    networks:
+      - fb-network
+    command: npm run dev
+
+volumes:
+  fb-db:
+networks:
+  fb-network:
+    driver: bridge
