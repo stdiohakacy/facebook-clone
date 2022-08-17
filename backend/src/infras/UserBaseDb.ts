@@ -10,9 +10,6 @@ export abstract class UserBaseDb<TEntity extends User> extends DbEntity<TEntity>
     @Column('varchar', { name: "name" })
     name!: string;
 
-    @Column('varchar', { name: "address" })
-    address!: string;
-
     @Column('varchar', { name: "email" })
     email!: string;
 
@@ -40,6 +37,18 @@ export abstract class UserBaseDb<TEntity extends User> extends DbEntity<TEntity>
     @Column('enum', { name: "accountStatus", enum: AccountStatus })
     accountStatus!: AccountStatus;
 
+    @Column('varchar', { name: "password" })
+    password!: string;
+
+    @Column('varchar', { name: "profilePicture" })
+    profilePicture!: string;
+
+    @Column('varchar', { name: "coverPhoto" })
+    coverPhoto!: string;
+
+    @Column('varchar', { name: "gender" })
+    gender!: string;
+
     @Column('varchar', { name: "role" })
     role!: string;
 
@@ -49,16 +58,19 @@ export abstract class UserBaseDb<TEntity extends User> extends DbEntity<TEntity>
         const entity = super.toEntity();
 
         entity.name = this.name;
-        entity.address = this.address;
         entity.email = this.email;
         entity.phone = this.phone;
-        entity.streetAddress = this.streetAddress;
-        entity.city = this.city;
-        entity.state = this.state;
-        entity.zipCode = this.zipCode;
-        entity.country = this.country;
-        entity.dateOfMembership = this.dateOfMembership;
-        entity.accountStatus = this.accountStatus;
+        entity.address.streetAddress = this.streetAddress;
+        entity.address.city = this.city;
+        entity.address.state = this.state;
+        entity.address.zipCode = this.zipCode;
+        entity.address.country = this.country;
+        entity.member!.dateOfMembership = this.dateOfMembership!;
+        entity.account.accountStatus = this.accountStatus;
+        entity.account.password = this.password;
+        entity.profile.profilePicture = this.profilePicture;
+        entity.profile.coverPhoto = this.coverPhoto;
+        entity.profile.gender = this.gender;
         entity.role = this.role;
 
         /* Relationship */
@@ -70,16 +82,19 @@ export abstract class UserBaseDb<TEntity extends User> extends DbEntity<TEntity>
         super.fromEntity(entity);
 
         this.name = entity.name;
-        this.address = entity.address;
         this.email = entity.email;
         this.phone = entity.phone;
-        this.streetAddress = entity.streetAddress;
-        this.city = entity.city;
-        this.state = entity.state;
-        this.zipCode = entity.zipCode;
-        this.country = entity.country;
-        this.dateOfMembership = entity.dateOfMembership;
-        this.accountStatus = entity.accountStatus;
+        this.streetAddress = entity.address.streetAddress;
+        this.city = entity.address.city;
+        this.state = entity.address.state;
+        this.zipCode = entity.address.zipCode;
+        this.country = entity.address.country;
+        this.dateOfMembership = entity?.member?.dateOfMembership;
+        this.accountStatus = entity.account.accountStatus;
+        this.password = entity.account.password;
+        this.profilePicture = entity.profile.profilePicture;
+        this.coverPhoto = entity.profile.coverPhoto;
+        this.gender = entity.profile.gender;
         this.role = entity.role;
     }
 }
