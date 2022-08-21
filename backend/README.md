@@ -1,1 +1,1 @@
-migration generate : npm run typeorm migration:generate -- -n [name]
+migration generate : npm run typeorm:migrate [name]

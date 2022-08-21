@@ -13,7 +13,6 @@ createConnection()
     app.use(bodyParser.json());
     app.listen(3000, () => {
       console.log("Server started on port 3000!");
-      console.log(connection)
     });
   })
   .catch(error => console.log(error));
