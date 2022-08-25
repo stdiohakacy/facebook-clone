@@ -2,11 +2,12 @@ import { Column, Entity, OneToOne } from "typeorm";
 import { DbEntity } from "../infras/DbEntity";
 import { Account } from "../domain/Account";
 import { PersonDb } from "./PersonDb";
+import { AccountStatus } from "../constants/enum/AccountStatus";
 
 @Entity("account")
 export class AccountDb extends DbEntity<Account> {
-    @Column('varchar', { name: "status" })
-    status!: string;
+    @Column('enum', { name: "status", enum: AccountStatus, default: AccountStatus.Disabled })
+    status!: AccountStatus;
 
     @Column('varchar', { name: "password" })
     password!: string;

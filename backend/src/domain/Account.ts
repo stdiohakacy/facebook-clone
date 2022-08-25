@@ -1,8 +1,9 @@
+import { AccountStatus } from "../constants/enum/AccountStatus";
 import { Entity } from "./Entity";
 import { Person } from "./Person";
 
 export class Account extends Entity {
-    status!: string;
+    status!: AccountStatus;
     password!: string;
     /* Relationship */
     person?: Person;
