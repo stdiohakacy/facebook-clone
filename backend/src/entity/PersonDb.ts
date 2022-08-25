@@ -1,6 +1,7 @@
 import { DbEntity } from '../infras/DbEntity';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 import { Person } from '../domain/Person';
+import { AccountDb } from './AccountDb';
 
 export abstract class PersonBaseDb<TEntity extends Person> extends DbEntity<TEntity> {
   constructor(userType: { new (): TEntity } = Person as any) {
@@ -18,6 +19,10 @@ export abstract class PersonBaseDb<TEntity extends Person> extends DbEntity<TEnt
 
   /* Relationship */
 
+  @OneToOne(() => AccountDb, (account) => account.person)
+  @JoinColumn()
+  account!: AccountDb
+
   /* Handlers */
 
   override toEntity(): TEntity {
@@ -28,6 +33,10 @@ export abstract class PersonBaseDb<TEntity extends Person> extends DbEntity<TEnt
     entity.phone = this.phone;
 
     /* Relationship */
+
+    if(this.account) {
+      entity.account = this.account.toEntity();
+    }
 
     return entity;
   }
