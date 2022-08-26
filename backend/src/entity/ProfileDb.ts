@@ -1,8 +1,9 @@
-import { Column, Entity, OneToOne } from "typeorm";
+import { Column, Entity, ManyToOne, OneToOne } from "typeorm";
 import { DbEntity } from "../infras/DbEntity";
 import { Profile } from "../domain/Profile";
 import { GenderType } from "../constants/enum/GenderType";
 import { MemberDb } from "./MemberDb";
+import { WorkDb } from "./WorkDb";
 
 @Entity("profile")
 export class ProfileDb extends DbEntity<Profile> {
@@ -24,17 +25,24 @@ export class ProfileDb extends DbEntity<Profile> {
     @OneToOne(() => MemberDb, (member) => member.profile)
     member!: MemberDb
 
+    @ManyToOne(() => WorkDb, (works) => works.profile)
+    works!: WorkDb[]
+
     override toEntity(): Profile {
         const entity = super.toEntity();
 
         entity.profilePicture = this.profilePicture;
         entity.coverPhoto = this.coverPhoto;
         entity.gender = this.gender;
-        if(this.member) {
+        
+        /* Relationship */
+
+        if (this.member) {
             entity.member = this.member;
         }
-
-        /* Relationship */
+        if (this.works) {
+            entity.works = this.works.map((work) => work.toEntity());
+        }
 
         return entity;
     }
