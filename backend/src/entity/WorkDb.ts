@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToOne } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
 import { DbEntity } from "../infras/DbEntity";
 import { Work } from "../domain/Work";
 import { ProfileDb } from "./ProfileDb";
@@ -25,9 +25,13 @@ export class WorkDb extends DbEntity<Work> {
     @Column('varchar', { name: "description" })
     description!: string;
 
+    @Column('uuid', { name: "profileId" })
+    profileId!: string;
+
     /* Relationship */
 
     @ManyToOne(() => ProfileDb, (profile) => profile.works)
+    @JoinColumn({ name: "profileId" })
     profile!: ProfileDb
 
     override toEntity(): Work {

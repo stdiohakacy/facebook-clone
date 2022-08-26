@@ -4,6 +4,7 @@ import { Profile } from "../domain/Profile";
 import { GenderType } from "../constants/enum/GenderType";
 import { MemberDb } from "./MemberDb";
 import { WorkDb } from "./WorkDb";
+import { EducationDb } from "./EducationDb";
 
 @Entity("profile")
 export class ProfileDb extends DbEntity<Profile> {
@@ -28,6 +29,9 @@ export class ProfileDb extends DbEntity<Profile> {
     @ManyToOne(() => WorkDb, (works) => works.profile)
     works!: WorkDb[]
 
+    @ManyToOne(() => EducationDb, (educations) => educations.profile)
+    educations!: EducationDb[]
+
     override toEntity(): Profile {
         const entity = super.toEntity();
 
@@ -42,6 +46,9 @@ export class ProfileDb extends DbEntity<Profile> {
         }
         if (this.works) {
             entity.works = this.works.map((work) => work.toEntity());
+        }
+        if (this.educations) {
+            entity.educations = this.educations.map((education) => education.toEntity());
         }
 
         return entity;
