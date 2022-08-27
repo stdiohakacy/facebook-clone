@@ -4,7 +4,5 @@ import { PersonBaseDb } from "./PersonDb";
 
 @Entity("admin")
 export class AdminDb extends PersonBaseDb<Admin> {
-    constructor() {
-      super(Admin);
-    }
+    constructor() { super(Admin); }
 }

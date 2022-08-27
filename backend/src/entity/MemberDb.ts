@@ -1,13 +1,12 @@
 import { Member } from "../domain/Member";
-import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm";
 import { PersonBaseDb } from "./PersonDb";
 import { ProfileDb } from "./ProfileDb";
+import { GroupMembersDb } from "./GroupMembersDb";
 
 @Entity("member")
 export class MemberDb extends PersonBaseDb<Member> {
-  constructor() {
-    super(Member);
-  }
+  constructor() { super(Member); }
 
   @Column('timestamptz', { name: "dateOfMemberShip", nullable: true })
   dateOfMemberShip?: Date;
@@ -18,6 +17,8 @@ export class MemberDb extends PersonBaseDb<Member> {
   @JoinColumn()
   profile!: ProfileDb
 
+  @OneToMany(() => GroupMembersDb, (groupMembers) => groupMembers.member)
+  groupMembers!: GroupMembersDb
 
   override toEntity(): Member {
     const entity = super.toEntity();

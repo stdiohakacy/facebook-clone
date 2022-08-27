@@ -8,9 +8,7 @@ import { EducationDb } from "./EducationDb";
 
 @Entity("profile")
 export class ProfileDb extends DbEntity<Profile> {
-    constructor() {
-        super(Profile);
-    }
+    constructor() { super(Profile); }
 
     @Column('varchar', { name: "profilePicture", nullable: true})
     profilePicture?: string;

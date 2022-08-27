@@ -6,6 +6,8 @@ import { AccountStatus } from "../constants/enum/AccountStatus";
 
 @Entity("account")
 export class AccountDb extends DbEntity<Account> {
+    constructor() { super(Account); }
+
     @Column('enum', { name: "status", enum: AccountStatus, default: AccountStatus.Disabled })
     status!: AccountStatus;
 
@@ -14,7 +16,6 @@ export class AccountDb extends DbEntity<Account> {
 
     @OneToOne(() => PersonDb, (person) => person.account)
     person!: PersonDb
-
 
     override toEntity(): Account {
         const entity = super.toEntity();

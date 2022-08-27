@@ -4,9 +4,7 @@ import { Person } from '../domain/Person';
 import { AccountDb } from './AccountDb';
 
 export abstract class PersonBaseDb<TEntity extends Person> extends DbEntity<TEntity> {
-  constructor(userType: { new (): TEntity } = Person as any) {
-    super(userType);
-  }
+  constructor(userType: { new (): TEntity } = Person as any) { super(userType); }
 
   @Column('varchar', { name: "name" })
   name!: string;
