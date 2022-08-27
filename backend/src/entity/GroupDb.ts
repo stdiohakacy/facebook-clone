@@ -19,5 +19,5 @@ export class GroupDb extends DbEntity<Group> {
   /* Relationship */
 
   @OneToMany(() => GroupMembersDb, (groupMembers) => groupMembers.member)
-  groupMembers!: GroupMembersDb
+  groupMembers!: GroupMembersDb[]
 }

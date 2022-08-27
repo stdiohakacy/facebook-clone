@@ -20,8 +20,8 @@ export class PostDb extends DbEntity<Post> {
     /* Relationship */
 
     @OneToMany(() => MemberLikePostDb, (memberLikePosts) => memberLikePosts.post)
-    memberLikePosts?: MemberLikePostDb
+    memberLikePosts?: MemberLikePostDb[]
 
     @OneToMany(() => MemberSharePostDb, (memberSharePosts) => memberSharePosts.post)
-    memberSharePosts?: MemberSharePostDb
+    memberSharePosts?: MemberSharePostDb[]
 }

@@ -6,6 +6,7 @@ import { GroupMembersDb } from "./GroupMembersDb";
 import { MemberLikePostDb } from "./MemberLikePostDb";
 import { MemberSharePostDb } from "./MemberSharePostDb";
 import { MessageDb } from "./MessageDb";
+import { ConnectionInvitationDb } from "./ConnectionInvitationDb";
 
 @Entity("member")
 export class MemberDb extends PersonBaseDb<Member> {
@@ -21,16 +22,19 @@ export class MemberDb extends PersonBaseDb<Member> {
   profile!: ProfileDb
 
   @OneToMany(() => GroupMembersDb, (groupMembers) => groupMembers.member)
-  groupMembers!: GroupMembersDb
+  groupMembers!: GroupMembersDb[]
 
   @OneToMany(() => MemberLikePostDb, (memberLikePosts) => memberLikePosts.member)
-  memberLikePosts?: MemberLikePostDb
+  memberLikePosts?: MemberLikePostDb[]
 
   @OneToMany(() => MemberSharePostDb, (memberSharePosts) => memberSharePosts.member)
-  memberSharePosts?: MemberLikePostDb
+  memberSharePosts?: MemberLikePostDb[]
 
   @OneToMany(() => MessageDb, (messages) => messages.member)
-  messages?: MessageDb
+  messages?: MessageDb[]
+
+  @OneToMany(() => ConnectionInvitationDb, (connectionInvitations) => connectionInvitations.memberInvited)
+  connectionInvitations?: ConnectionInvitationDb[]
 
   override toEntity(): Member {
     const entity = super.toEntity();
