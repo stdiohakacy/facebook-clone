@@ -1,5 +1,5 @@
 import { Entity } from '../domain/Entity';
-import { CreateDateColumn, DeleteDateColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, DeleteDateColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 export abstract class DbEntity<TEntity extends Entity> {
   constructor(private _type: { new (): TEntity }) {}
@@ -10,11 +10,20 @@ export abstract class DbEntity<TEntity extends Entity> {
   @CreateDateColumn({ name: "createdAt", type: 'timestamptz' })
   createdAt!: Date;
 
+  @Column({ name: "createdBy", type: 'uuid' })
+  createdBy!: string;
+
   @UpdateDateColumn({ name: "updatedAt", type: 'timestamptz' })
   updatedAt!: Date;
 
+  @Column({ name: "updatedBy", type: 'uuid' })
+  updatedBy!: string;
+
   @DeleteDateColumn({ name: "deletedAt", type: 'timestamptz', nullable: true })
   deletedAt?: Date;
+
+  @Column({ name: "deletedBy", type: 'uuid' })
+  deletedBy!: string;
 
   /* Relationship */
 
@@ -22,18 +31,26 @@ export abstract class DbEntity<TEntity extends Entity> {
 
   toEntity(): TEntity {
     const entity = new this._type();
+
     entity.id = this.id;
     entity.createdAt = this.createdAt;
+    entity.createdBy = this.createdBy;
     entity.updatedAt = this.updatedAt;
+    entity.updatedBy = this.updatedBy;
     entity.deletedAt = this.deletedAt;
+    entity.deletedBy = this.deletedBy;
+
     return entity;
   }
 
   fromEntity(entity: TEntity): void {
     this.id = entity.id;
     this.createdAt = entity.createdAt;
+    this.createdBy = entity.createdBy;
     this.updatedAt = entity.updatedAt;
+    this.updatedBy = entity.updatedBy;
     this.deletedAt = entity.deletedAt;
+    this.deletedBy = entity.deletedBy;
   }
 
   toJSON(): any {

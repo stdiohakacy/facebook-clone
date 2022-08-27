@@ -5,6 +5,7 @@ import { ProfileDb } from "./ProfileDb";
 import { GroupMembersDb } from "./GroupMembersDb";
 import { MemberLikePostDb } from "./MemberLikePostDb";
 import { MemberSharePostDb } from "./MemberSharePostDb";
+import { MessageDb } from "./MessageDb";
 
 @Entity("member")
 export class MemberDb extends PersonBaseDb<Member> {
@@ -27,6 +28,9 @@ export class MemberDb extends PersonBaseDb<Member> {
 
   @OneToMany(() => MemberSharePostDb, (memberSharePosts) => memberSharePosts.member)
   memberSharePosts?: MemberLikePostDb
+
+  @OneToMany(() => MessageDb, (messages) => messages.member)
+  messages?: MessageDb
 
   override toEntity(): Member {
     const entity = super.toEntity();
