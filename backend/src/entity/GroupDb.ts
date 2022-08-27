@@ -13,7 +13,7 @@ export class GroupDb extends DbEntity<Group> {
   @Column('varchar', { name: "description" })
   description!: string;
 
-  @Column('varchar', { name: "totalMember" })
+  @Column('integer', { name: "totalMember" })
   totalMember!: number;
 
   /* Relationship */

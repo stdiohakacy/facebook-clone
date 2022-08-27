@@ -19,7 +19,7 @@ export class GroupMembersDb extends DbEntity<GroupMembers> {
     member!: MemberDb
 
     @ManyToOne(() => GroupDb, (group) => group.groupMembers)
-    @JoinColumn({ name: "memberId" })
+    @JoinColumn({ name: "groupId" })
     group!: GroupDb
 
     /* Relationship */

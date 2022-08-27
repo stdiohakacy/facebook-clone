@@ -3,6 +3,8 @@ import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm";
 import { PersonBaseDb } from "./PersonDb";
 import { ProfileDb } from "./ProfileDb";
 import { GroupMembersDb } from "./GroupMembersDb";
+import { MemberLikePostDb } from "./MemberLikePostDb";
+import { MemberSharePostDb } from "./MemberSharePostDb";
 
 @Entity("member")
 export class MemberDb extends PersonBaseDb<Member> {
@@ -19,6 +21,12 @@ export class MemberDb extends PersonBaseDb<Member> {
 
   @OneToMany(() => GroupMembersDb, (groupMembers) => groupMembers.member)
   groupMembers!: GroupMembersDb
+
+  @OneToMany(() => MemberLikePostDb, (memberLikePosts) => memberLikePosts.member)
+  memberLikePosts?: MemberLikePostDb
+
+  @OneToMany(() => MemberSharePostDb, (memberSharePosts) => memberSharePosts.member)
+  memberSharePosts?: MemberLikePostDb
 
   override toEntity(): Member {
     const entity = super.toEntity();
