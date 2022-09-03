@@ -1,3 +1,4 @@
+import { Comment } from "./Comment";
 import { Entity } from "./Entity";
 
 export class Post extends Entity {
@@ -6,4 +7,5 @@ export class Post extends Entity {
     totalShares!: number;
 
     /* Relationship */
+    comments!: Comment[]
 }

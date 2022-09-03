@@ -5,7 +5,9 @@ import { Person } from "./Person";
 export class Account extends Entity {
     status!: AccountStatus;
     password!: string;
+
     /* Relationship */
+    
     person?: Person;
 
     /* Handlers */

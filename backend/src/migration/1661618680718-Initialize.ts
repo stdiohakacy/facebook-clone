@@ -72,5 +72,4 @@ export class Initialize1661618680718 implements MigrationInterface {
         await queryRunner.query(`DROP TYPE "public"."account_status_enum"`);
         await queryRunner.query(`DROP TABLE "persons"`);
     }
-
 }

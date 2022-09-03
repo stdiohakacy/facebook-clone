@@ -3,6 +3,7 @@ import { DbEntity } from "../infras/DbEntity";
 import { Post } from "../domain/Post";
 import { MemberLikePostDb } from "./MemberLikePostDb";
 import { MemberSharePostDb } from "./MemberSharePostDb";
+import { CommentDb } from "./CommentDb";
 
 @Entity("posts")
 export class PostDb extends DbEntity<Post> {
@@ -24,4 +25,7 @@ export class PostDb extends DbEntity<Post> {
 
     @OneToMany(() => MemberSharePostDb, (memberSharePosts) => memberSharePosts.post)
     memberSharePosts?: MemberSharePostDb[]
+    
+    @OneToMany(() => CommentDb, (comments) => comments.post)
+    comments?: CommentDb[]
 }
